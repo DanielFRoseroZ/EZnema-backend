@@ -137,6 +137,11 @@ public class User implements UserDetails {
     }
 
 
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+
     /**
      * -----------------------------------------------------------------
      * <h1>
@@ -162,10 +167,6 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     @Override
