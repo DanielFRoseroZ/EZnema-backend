@@ -1,8 +1,11 @@
 package com.eznema.vb_test.controller;
 
+import com.eznema.vb_test.config.CustomErrors.ForbiddenException;
+import com.eznema.vb_test.config.CustomErrors.UnauthorizedException;
 import com.eznema.vb_test.model.AuthenticationResponse;
 import com.eznema.vb_test.model.User;
 import com.eznema.vb_test.service.AuthenticationService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,12 +32,21 @@ public class AuthenticationController {
 
     /**
      * Método que maneja las solicitudes de registro de nuevos usuarios.
-     *  - Párametro: Objeto User que contiene la los datos del usuario a registrar.
-     *  - Retorno: ResponseEntity que contiene la respuesta de autenticación, con un token JWT de ser exitosa.
-     * */
+     * - Párametro: Objeto User que contiene la los datos del usuario a registrar.
+     * - Retorno: ResponseEntity que contiene la respuesta de autenticación, con un token JWT de ser exitosa.
+     */
     @PostMapping("/register")
-    public ResponseEntity<AuthenticationResponse> register(@RequestBody User request) {
-        return ResponseEntity.ok(authenticationService.register(request));
+    public ResponseEntity<String> register(@RequestBody User request) {
+        try {
+            authenticationService.register(request);
+            return new ResponseEntity<>("Usuario registrado con éxito", HttpStatus.CREATED);
+        } catch (UnauthorizedException e) {
+            return new ResponseEntity<>("Error: " + e.getMessage(), HttpStatus.UNAUTHORIZED);
+        } catch (ForbiddenException e) {
+            return new ResponseEntity<>("Error: " + e.getMessage(), HttpStatus.FORBIDDEN);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Error al registrar el usuario", HttpStatus.BAD_REQUEST);
+        }
     }
 
 

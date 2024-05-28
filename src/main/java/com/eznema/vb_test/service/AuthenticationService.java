@@ -1,8 +1,10 @@
 package com.eznema.vb_test.service;
 
 import com.eznema.vb_test.model.AuthenticationResponse;
+import com.eznema.vb_test.model.Role;
 import com.eznema.vb_test.model.User;
 import com.eznema.vb_test.repository.UserRepository;
+import jakarta.annotation.PostConstruct;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -22,6 +24,20 @@ public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
 
 
+    @PostConstruct
+    public void init() {
+        if (!userRepository.existsByUsername("admin@gmail.com")) {
+            User admin = new User();
+            admin.setFirstName("Eznema");
+            admin.setLastName("Admin");
+            admin.setPhone("3222597395");
+            admin.setUsername("admin@gmail.com");
+            admin.setPassword(passwordEncoder.encode("adminpassword"));
+            admin.setRole(Role.ADMIN);
+            userRepository.save(admin);
+        }
+    }
+
     public AuthenticationService(UserRepository userRepository, PasswordEncoder passwordEncoder, JwtService jwtService, AuthenticationManager authenticationManager) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
@@ -36,11 +52,8 @@ public class AuthenticationService {
         user.setUsername(request.getUsername());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.setPhone(request.getPhone());
-
-        user.setRole(request.getRole());
-
+        user.setRole(Role.USER);
         user = userRepository.save(user);
-
         String token = jwtService.generateToken(user);
 
         return new AuthenticationResponse(token);

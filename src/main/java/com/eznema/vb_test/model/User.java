@@ -15,11 +15,11 @@ import java.util.List;
  * como el identificador, nombre y correo electrónico.
  * </p>
  *
- * <Esta clase está mapeada a una tabla en la base de datos usando JPA.
+ * Esta clase está mapeada a una tabla en la base de datos usando JPA.
  */
 
 @Entity
-@Table(name = "user")
+@Table(name = "user", uniqueConstraints = {@UniqueConstraint(columnNames = {"username"})})
 public class User implements UserDetails {
 
     /**
@@ -28,42 +28,42 @@ public class User implements UserDetails {
      * */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "id", nullable = false)
     private Integer id;
 
 
     /**
      * Nombre del usuario
      * */
-    @Column(name = "first_name")
+    @Column(name = "first_name", nullable = false)
     private String firstName;
 
 
     /**
      * Apellido del usuario
      * */
-    @Column(name = "last_name")
+    @Column(name = "last_name", nullable = false)
     private String lastName;
 
 
     /**
      * Telefono del usuario
      * */
-    @Column(name = "phone")
+    @Column(name = "phone", nullable = false)
     private String phone;
 
 
     /**
      * Correo electrónico del usuario
      * */
-    @Column(name = "username")
+    @Column(name = "username", nullable = false)
     private String username;
 
 
     /**
      * Contraseña del usuario
      * */
-    @Column(name = "password")
+    @Column(name = "password", nullable = false)
     private String password;
 
 
