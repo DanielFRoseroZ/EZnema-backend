@@ -10,16 +10,10 @@ import java.util.List;
 
 /**
  * Entidad User: Representa una entidad de usuario en la aplicación.
- *
- * <p>La entidad Usuario almacena la información básica de un usuario
- * como el identificador, nombre y correo electrónico.
- * </p>
- *
- * Esta clase está mapeada a una tabla en la base de datos usando JPA.
  */
 
 @Entity
-@Table(name = "user", uniqueConstraints = {@UniqueConstraint(columnNames = {"username"})})
+@Table(name = "User", uniqueConstraints = {@UniqueConstraint(columnNames = {"username"})})
 public class User implements UserDetails {
 
     /**

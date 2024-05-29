@@ -57,9 +57,9 @@ public class SecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(
-                        req->req.requestMatchers("/login/**", "/register/**", "/logout/**")
+                        req->req.requestMatchers("/login/**", "/register/**", "/categories/**", "/movies/**", "/categorie/**", "/movie/**", "/theaters/**")
                                 .permitAll()
-                                .requestMatchers("/admin_only/**").hasAuthority("ADMIN")
+                                .requestMatchers("/create_categorie/**", "/create_movie/**", "/users", "/theater_types", "/create_th_type/**", "/theater/**").hasAuthority("ADMIN")
                                 .anyRequest()
                                 .authenticated()
 

@@ -43,7 +43,7 @@ public class AuthenticationService {
         this.authenticationManager = authenticationManager;
     }
 
-    public AuthenticationResponse register(User request) {
+    public void register(User request) {
         User user = new User();
         user.setFirstName(request.getFirstName());
         user.setLastName(request.getLastName());
@@ -54,7 +54,6 @@ public class AuthenticationService {
         user = userRepository.save(user);
         String token = jwtService.generateToken(user);
 
-        return new AuthenticationResponse(token);
     }
 
     public AuthenticationResponse authenticate(User request) {
@@ -70,5 +69,4 @@ public class AuthenticationService {
 
         return new AuthenticationResponse(token);
     }
-
 }
