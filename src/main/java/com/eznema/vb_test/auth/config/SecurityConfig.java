@@ -57,11 +57,16 @@ public class SecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(
-                        req->req.requestMatchers("/login/**")
+                        req->req.requestMatchers("/login/**", "/register/**", "/logout/**")
                                 .permitAll()
-                                .requestMatchers("/register/**").hasAuthority("ADMIN")
+                                .requestMatchers("/admin_only/**").hasAuthority("ADMIN")
                                 .anyRequest()
                                 .authenticated()
+
+                )
+                .logout(logout -> logout
+                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/")
                 )
                 .userDetailsService(userDetailsServiceImp)
                 .exceptionHandling(e->e.accessDeniedHandler(accesDeniedHandler)

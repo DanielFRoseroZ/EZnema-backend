@@ -7,6 +7,7 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Cookie;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -53,15 +54,15 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             @NonNull HttpServletResponse response,
             @NonNull FilterChain filterChain) throws ServletException, IOException {
 
-        String authHeader = request.getHeader("Authorization");
+        //Extraer el token de las cookies
+        String token = getJwtFromCookies(request);
 
-        if(authHeader == null || !authHeader.startsWith("Bearer "))
+        if(token == null)
         {
             filterChain.doFilter(request, response);
             return;
         }
 
-        String token = authHeader.substring(7);
         String username = jwtService.extractUsername(token);
 
         if(username != null && SecurityContextHolder.getContext().getAuthentication() == null)
@@ -83,4 +84,17 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
         filterChain.doFilter(request, response);
     }
+
+    private String getJwtFromCookies(HttpServletRequest request) {
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("eznema")) {
+                    return cookie.getValue();
+                }
+            }
+        }
+        return null;
+    }
+
 }
