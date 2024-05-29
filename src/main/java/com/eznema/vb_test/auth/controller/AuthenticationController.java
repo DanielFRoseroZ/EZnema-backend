@@ -1,10 +1,12 @@
-package com.eznema.vb_test.controller;
+package com.eznema.vb_test.auth.controller;
 
-import com.eznema.vb_test.config.CustomErrors.ForbiddenException;
-import com.eznema.vb_test.config.CustomErrors.UnauthorizedException;
-import com.eznema.vb_test.model.AuthenticationResponse;
-import com.eznema.vb_test.model.User;
-import com.eznema.vb_test.service.AuthenticationService;
+import com.eznema.vb_test.auth.CustomErrors.ForbiddenException;
+import com.eznema.vb_test.auth.CustomErrors.UnauthorizedException;
+import com.eznema.vb_test.auth.model.AuthenticationResponse;
+import com.eznema.vb_test.user.model.User;
+import com.eznema.vb_test.auth.service.AuthenticationService;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -56,8 +58,25 @@ public class AuthenticationController {
      *  - Retorno: ResponseEntity que contiene la respuesta de autenticación, con un JWT de ser exitosa.
      * */
     @PostMapping("/login")
-    public ResponseEntity<AuthenticationResponse> login(@RequestBody User request) {
-        return ResponseEntity.ok(authenticationService.authenticate(request));
+    public ResponseEntity<AuthenticationResponse> login(@RequestBody User request, HttpServletResponse response) {
+        AuthenticationResponse authResponse = authenticationService.authenticate(request);
+
+        // Crear la cookie con el token JWT
+        Cookie jwtCookie = new Cookie("eznema", authResponse.getToken());
+        jwtCookie.setHttpOnly(true);
+        jwtCookie.setMaxAge(24*60*60);
+        jwtCookie.setPath("/");
+        jwtCookie.setSecure(false);
+
+        // Configurar el encabezado Set-Cookie con SameSite
+        String sameSiteCookie = String.format("eznema=%s; Max-Age=%d; Path=/; Secure; HttpOnly; SameSite=None",
+                authResponse.getToken(), 24 * 60 * 60);
+        response.setHeader("Set-Cookie", sameSiteCookie);
+
+        // Añadir la cookie a la respuesta
+        response.addCookie(jwtCookie);
+
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
 }

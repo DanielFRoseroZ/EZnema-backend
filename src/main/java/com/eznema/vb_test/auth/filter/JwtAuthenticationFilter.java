@@ -1,8 +1,8 @@
-package com.eznema.vb_test.filter;
+package com.eznema.vb_test.auth.filter;
 
-import com.eznema.vb_test.model.User;
-import com.eznema.vb_test.service.JwtService;
-import com.eznema.vb_test.service.UserDetailsServiceImp;
+import com.eznema.vb_test.user.model.User;
+import com.eznema.vb_test.auth.service.JwtService;
+import com.eznema.vb_test.user.service.UserDetailsServiceImp;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

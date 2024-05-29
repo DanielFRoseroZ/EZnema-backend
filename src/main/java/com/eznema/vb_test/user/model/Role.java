@@ -1,4 +1,4 @@
-package com.eznema.vb_test.model;
+package com.eznema.vb_test.user.model;
 
 /**
  * Se definen los únicos 2 roles que contempla la app ->

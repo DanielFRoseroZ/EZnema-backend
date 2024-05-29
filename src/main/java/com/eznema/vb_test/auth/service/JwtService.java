@@ -1,7 +1,7 @@
-package com.eznema.vb_test.service;
+package com.eznema.vb_test.auth.service;
 
 
-import com.eznema.vb_test.model.User;
+import com.eznema.vb_test.user.model.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;

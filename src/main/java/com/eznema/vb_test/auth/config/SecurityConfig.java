@@ -1,8 +1,8 @@
-package com.eznema.vb_test.config;
+package com.eznema.vb_test.auth.config;
 
-import com.eznema.vb_test.config.CustomErrors.CustomAccesDeniedHandler;
-import com.eznema.vb_test.filter.JwtAuthenticationFilter;
-import com.eznema.vb_test.service.UserDetailsServiceImp;
+import com.eznema.vb_test.auth.CustomErrors.CustomAccesDeniedHandler;
+import com.eznema.vb_test.auth.filter.JwtAuthenticationFilter;
+import com.eznema.vb_test.user.service.UserDetailsServiceImp;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
@@ -57,9 +57,9 @@ public class SecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(
-                        req->req.requestMatchers("/login/**", "/register/**")
+                        req->req.requestMatchers("/login/**")
                                 .permitAll()
-                                .requestMatchers("/admin_only/**").hasAuthority("ADMIN")
+                                .requestMatchers("/register/**").hasAuthority("ADMIN")
                                 .anyRequest()
                                 .authenticated()
                 )

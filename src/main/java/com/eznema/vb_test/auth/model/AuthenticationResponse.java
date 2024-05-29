@@ -1,4 +1,4 @@
-package com.eznema.vb_test.model;
+package com.eznema.vb_test.auth.model;
 
 public class AuthenticationResponse {
     private final String token;

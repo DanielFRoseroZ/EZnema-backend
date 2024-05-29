@@ -1,6 +1,6 @@
-package com.eznema.vb_test.repository;
+package com.eznema.vb_test.user.repository;
 
-import com.eznema.vb_test.model.User;
+import com.eznema.vb_test.user.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

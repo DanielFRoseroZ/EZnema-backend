@@ -1,5 +1,6 @@
-package com.eznema.vb_test.config.CustomErrors;
+package com.eznema.vb_test.auth.CustomErrors;
 
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -17,5 +18,4 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
     protected ResponseEntity<Object> handleForbiddenException(ForbiddenException ex, WebRequest request) {
         return handleExceptionInternal(ex, "Forbidden: " + ex.getMessage(), null, HttpStatus.FORBIDDEN, request);
     }
-
 }

@@ -1,4 +1,4 @@
-package com.eznema.vb_test.model;
+package com.eznema.vb_test.user.model;
 
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;

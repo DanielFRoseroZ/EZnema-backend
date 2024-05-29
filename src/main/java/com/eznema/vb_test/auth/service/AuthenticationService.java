@@ -1,16 +1,14 @@
-package com.eznema.vb_test.service;
+package com.eznema.vb_test.auth.service;
 
-import com.eznema.vb_test.model.AuthenticationResponse;
-import com.eznema.vb_test.model.Role;
-import com.eznema.vb_test.model.User;
-import com.eznema.vb_test.repository.UserRepository;
+import com.eznema.vb_test.auth.model.AuthenticationResponse;
+import com.eznema.vb_test.user.model.Role;
+import com.eznema.vb_test.user.model.User;
+import com.eznema.vb_test.user.repository.UserRepository;
 import jakarta.annotation.PostConstruct;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 public class AuthenticationService {

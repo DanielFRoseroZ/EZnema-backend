@@ -1,6 +1,6 @@
-package com.eznema.vb_test.service;
+package com.eznema.vb_test.user.service;
 
-import com.eznema.vb_test.repository.UserRepository;
+import com.eznema.vb_test.user.repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
