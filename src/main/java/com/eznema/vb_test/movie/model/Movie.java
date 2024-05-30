@@ -34,7 +34,7 @@ public class Movie {
     private String releaseDate;
 
     @Column(name = "age_restriction")
-    private String ageRestriction;
+    private int ageRestriction;
 
     @Column(name = "duration")
     private String duration;

@@ -17,7 +17,7 @@ public class Theater {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @OneToMany(mappedBy = "name")
-    private List<TheaterType> theaterTypes;
+    @ManyToOne(optional = false)
+    private TheaterType theaterType;
 
 }
